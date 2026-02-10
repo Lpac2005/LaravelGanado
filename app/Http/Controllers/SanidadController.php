@@ -11,7 +11,10 @@ class SanidadController extends Controller
      */
     public function index()
     {
-        //
+        $sanidads = \App\Models\Sanidad::with('bovino')->latest('fecha_aplicacion')->get();
+        return \Inertia\Inertia::render('Sanidads/Index', [
+            'sanidads' => $sanidads
+        ]);
     }
 
     /**
@@ -19,7 +22,10 @@ class SanidadController extends Controller
      */
     public function create()
     {
-        //
+        $bovinos = \App\Models\Bovino::select('id', 'arete', 'nombre')->get();
+        return \Inertia\Inertia::render('Sanidads/Create', [
+            'bovinos' => $bovinos
+        ]);
     }
 
     /**
@@ -27,7 +33,19 @@ class SanidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'bovino_id' => 'required|exists:bovinos,id',
+            'tipo' => 'required|string|max:255',
+            'producto' => 'required|string|max:255',
+            'fecha_aplicacion' => 'required|date',
+            'proxima_dosis' => 'nullable|date|after:fecha_aplicacion',
+            'costo' => 'nullable|numeric|min:0',
+            'notas' => 'nullable|string',
+        ]);
+
+        \App\Models\Sanidad::create($validated);
+
+        return redirect()->route('sanidads.index');
     }
 
     /**
@@ -43,7 +61,13 @@ class SanidadController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $sanidad = \App\Models\Sanidad::findOrFail($id);
+        $bovinos = \App\Models\Bovino::select('id', 'arete', 'nombre')->get();
+
+        return \Inertia\Inertia::render('Sanidads/Edit', [
+            'sanidad' => $sanidad,
+            'bovinos' => $bovinos
+        ]);
     }
 
     /**
@@ -51,7 +75,21 @@ class SanidadController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $sanidad = \App\Models\Sanidad::findOrFail($id);
+
+        $validated = $request->validate([
+            'bovino_id' => 'required|exists:bovinos,id',
+            'tipo' => 'required|string|max:255',
+            'producto' => 'required|string|max:255',
+            'fecha_aplicacion' => 'required|date',
+            'proxima_dosis' => 'nullable|date|after:fecha_aplicacion',
+            'costo' => 'nullable|numeric|min:0',
+            'notas' => 'nullable|string',
+        ]);
+
+        $sanidad->update($validated);
+
+        return redirect()->route('sanidads.index');
     }
 
     /**
@@ -59,6 +97,9 @@ class SanidadController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $sanidad = \App\Models\Sanidad::findOrFail($id);
+        $sanidad->delete();
+
+        return redirect()->route('sanidads.index');
     }
 }

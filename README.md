@@ -18,10 +18,17 @@ El sistema cuenta (o contará) con los siguientes módulos clave:
 
 1.  ✅ **Gestión de Bovinos**: Registro individual de animales (raza, edad, origen, etc.).
 2.  ✅ **Control de Pesajes**: Historial de peso para monitorear el desarrollo y ganancia diaria.
-3.  **Sanidad**: Registro de vacunas, tratamientos y controles veterinarios.
+3.  ✅ **Sanidad**: Registro de vacunas, tratamientos y controles veterinarios.
 4.  **Eventos**: Calendario de actividades, partos, destetes y recordatorios.
 
 ## 📅 Historial de Cambios
+
+### v0.3.0 - Módulo de Sanidad
+- Creación de Modelo y Migración para `Sanidad`.
+- Controlador con métodos CRUD.
+- Vistas Vue (Index, Create, Edit) con badges de tipo.
+- Registro de costos y próximas dosis.
+- Navegación actualizada.
 
 ### v0.2.0 - Módulo de Pesajes
 - Creación de Modelo y Migración para `Pesajes`.
