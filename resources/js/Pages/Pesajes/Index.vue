@@ -1,12 +1,27 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
     pesajes: Array,
+    filters: Object,
 });
 
 const form = useForm({});
+const search = ref(props.filters.search || '');
+
+let timeout = null;
+watch(search, (value) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+        router.get(route('pesajes.index'), { search: value }, {
+            preserveState: true,
+            replace: true,
+        });
+    }, 300);
+});
 
 const deletePesaje = (id) => {
     if (confirm('¿Estás seguro de que deseas eliminar este registro de peso?')) {
@@ -25,7 +40,15 @@ const deletePesaje = (id) => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-end mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="w-full max-w-md">
+                        <TextInput
+                            v-model="search"
+                            type="search"
+                            placeholder="Buscar por Arete o Nombre..."
+                            class="w-full"
+                        />
+                    </div>
                     <Link
                         :href="route('pesajes.create')"
                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-md transition ease-in-out duration-150"

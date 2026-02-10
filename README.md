@@ -10,59 +10,34 @@ Este proyecto está construido sobre un stack robusto y moderno para garantizar 
 - **Frontend**: [Vue.js 3](https://vuejs.org) (Composition API)
 - **Intermediario**: [Inertia.js](https://inertiajs.com) (Monolito Moderno)
 - **Estilos**: [Tailwind CSS 3](https://tailwindcss.com)
-- **Base de Datos**: MySQL / MariaDB
+- **Base de Datos**: SQLite (Integrada)
 
 ## 📋 Módulos Principales
 
-El sistema cuenta (o contará) con los siguientes módulos clave:
+El sistema cuenta con los siguientes módulos clave:
 
 1.  ✅ **Gestión de Bovinos**: Registro individual de animales (raza, edad, origen, etc.).
 2.  ✅ **Control de Pesajes**: Historial de peso para monitorear el desarrollo y ganancia diaria.
 3.  ✅ **Sanidad**: Registro de vacunas, tratamientos y controles veterinarios.
 4.  ✅ **Eventos**: Calendario de actividades, partos, destetes y recordatorios.
+5.  ✅ **Modo Oscuro**: Interfaz adaptable a temas claro/oscuro.
 
 ## 📅 Historial de Cambios
 
-### v0.5.0 - Mejoras de UX e Internacionalización
-- **Dashboard**: Panel con tarjetas de estadísticas en tiempo real y accesos directos.
-- **Perfil**: Traducción completa al español (Información, Contraseña, Eliminar Cuenta).
-- **Rutas**: Optimización de carga de datos para el dashboard.
+### v1.0.0 - Versión Estable
+- **Base de Datos**: Migración completa a SQLite para simplificar instalación.
+- **Interfaz**: Implementación de Modo Oscuro/Claro con persistencia.
+- **Configuración**: Eliminación de depencia de XAMPP/MySQL.
 
-### v0.4.0 - Módulo de Eventos
-- Registro de sucesos: Partos, Celos, Servicios, etc.
-- Calendario cronológico (Listado).
-- Badges de colores para tipos de eventos.
-- Relación `Bovino -> Eventos`.
-
-### v0.3.0 - Módulo de Sanidad
-- Creación de Modelo y Migración para `Sanidad`.
-- Controlador con métodos CRUD.
-- Vistas Vue (Index, Create, Edit) con badges de tipo.
-- Registro de costos y próximas dosis.
-- Navegación actualizada.
-
-### v0.2.0 - Módulo de Pesajes
-- Creación de Modelo y Migración para `Pesajes`.
-- Controlador con métodos CRUD.
-- Vistas Vue (Index, Create, Edit) con integración de Inertia.
-- Relación `Bovino -> Pesajes` implementada.
-- Navegación actualizada.
-
-### v0.1.0 - Módulo de Bovinos
-- Configuración inicial del proyecto (Laravel + Vue + Inertia).
-- CRUD completo para `Bovinos`.
-- Autenticación y configuración de base de datos.
-
-## 🛠️ Instalación y Configuración Local
+## 🛠️ Instalación y Configuración (Simplificada)
 
 Sigue estos pasos para levantar el proyecto en tu entorno local:
 
 ### 1. Requisitos Previos
 Asegúrate de tener instalado:
 - PHP >= 8.1
-- Composer
 - Node.js & NPM
-- Servidor de Base de Datos (MySQL)
+- Git
 
 ### 2. Clonar el Repositorio
 ```bash
@@ -81,19 +56,27 @@ npm install
 ```
 
 ### 4. Configuración de Entorno
-Copia el archivo de ejemplo y configura tus credenciales de base de datos:
+Copia el archivo de ejemplo (ya configurado para SQLite):
 ```bash
 cp .env.example .env
 ```
-Edita el archivo `.env` y ajusta `DB_DATABASE`, `DB_USERNAME`, y `DB_PASSWORD`.
-
 Genera la clave de la aplicación:
 ```bash
 php artisan key:generate
 ```
 
 ### 5. Base de Datos
-Ejecuta las migraciones para crear las tablas necesarias:
+Crea el archivo de base de datos vacío (si no existe) y ejecuta las migraciones:
+*En Windows (PowerShell):*
+```powershell
+New-Item -ItemType File database/database.sqlite
+```
+*En Linux/Mac:*
+```bash
+touch database/database.sqlite
+```
+
+Luego ejecuta las migraciones:
 ```bash
 php artisan migrate
 ```
@@ -101,17 +84,28 @@ php artisan migrate
 ### 6. Ejecutar la Aplicación
 Necesitarás dos terminales para correr los servidores de desarrollo:
 
-Terminal 1 (Vite - Hot Reload):
+Terminal 1 (Frontend):
 ```bash
 npm run dev
 ```
 
-Terminal 2 (Laravel Server):
+Terminal 2 (Backend):
 ```bash
 php artisan serve
 ```
 
 Abre tu navegador en `http://localhost:8000`.
+
+## ⚠️ Solución de Problemas Comunes
+
+**1. Error de Scripts en PowerShell**
+Si al ejecutar `npm run dev` obtienes un error de seguridad, ejecuta este comando en PowerShell:
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+```
+
+**2. Base de Datos no encontrada**
+Asegúrate de haber creado el archivo `database/database.sqlite` antes de correr las migraciones.
 
 ## 📂 Estructura del Proyecto
 

@@ -1,12 +1,27 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
     eventos: Array,
+    filters: Object,
 });
 
 const form = useForm({});
+const search = ref(props.filters.search || '');
+
+let timeout = null;
+watch(search, (value) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+        router.get(route('eventos.index'), { search: value }, {
+            preserveState: true,
+            replace: true,
+        });
+    }, 300);
+});
 
 const deleteEvento = (id) => {
     if (confirm('¿Estás seguro de que deseas eliminar este evento?')) {
@@ -32,7 +47,15 @@ const formatDate = (dateString) => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-end mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="w-full max-w-md">
+                        <TextInput
+                            v-model="search"
+                            type="search"
+                            placeholder="Buscar por Bovino o Tipo..."
+                            class="w-full"
+                        />
+                    </div>
                     <Link
                         :href="route('eventos.create')"
                         class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded shadow-md transition ease-in-out duration-150"

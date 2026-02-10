@@ -9,11 +9,23 @@ class EventoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $eventos = \App\Models\Evento::with('bovino')->latest('fecha')->get();
+        $query = \App\Models\Evento::with('bovino');
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->whereHas('bovino', function($q) use ($search) {
+                $q->where('arete', 'like', "%{$search}%")
+                  ->orWhere('nombre', 'like', "%{$search}%");
+            })->orWhere('tipo', 'like', "%{$search}%");
+        }
+
+        $eventos = $query->latest('fecha')->get();
+
         return \Inertia\Inertia::render('Eventos/Index', [
-            'eventos' => $eventos
+            'eventos' => $eventos,
+            'filters' => $request->only(['search']),
         ]);
     }
 

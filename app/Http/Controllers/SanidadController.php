@@ -9,11 +9,23 @@ class SanidadController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sanidads = \App\Models\Sanidad::with('bovino')->latest('fecha_aplicacion')->get();
+        $query = \App\Models\Sanidad::with('bovino');
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->whereHas('bovino', function($q) use ($search) {
+                $q->where('arete', 'like', "%{$search}%")
+                  ->orWhere('nombre', 'like', "%{$search}%");
+            })->orWhere('producto', 'like', "%{$search}%");
+        }
+
+        $sanidads = $query->latest('fecha_aplicacion')->get();
+
         return \Inertia\Inertia::render('Sanidads/Index', [
-            'sanidads' => $sanidads
+            'sanidads' => $sanidads,
+            'filters' => $request->only(['search']),
         ]);
     }
 

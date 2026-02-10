@@ -9,11 +9,21 @@ class BovinoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $bovinos = \App\Models\Bovino::latest()->get();
+        $query = \App\Models\Bovino::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('nombre', 'like', "%{$search}%")
+                  ->orWhere('arete', 'like', "%{$search}%");
+        }
+
+        $bovinos = $query->latest()->get();
+
         return \Inertia\Inertia::render('Bovinos/Index', [
-            'bovinos' => $bovinos
+            'bovinos' => $bovinos,
+            'filters' => $request->only(['search']),
         ]);
     }
 

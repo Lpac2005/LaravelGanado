@@ -9,12 +9,24 @@ class PesajeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = \App\Models\Pesaje::with('bovino');
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->whereHas('bovino', function($q) use ($search) {
+                $q->where('arete', 'like', "%{$search}%")
+                  ->orWhere('nombre', 'like', "%{$search}%");
+            });
+        }
+
         // Cargamos los pesajes con la información del bovino asociado
-        $pesajes = \App\Models\Pesaje::with('bovino')->latest('fecha')->get();
+        $pesajes = $query->latest('fecha')->get();
+
         return \Inertia\Inertia::render('Pesajes/Index', [
-            'pesajes' => $pesajes
+            'pesajes' => $pesajes,
+            'filters' => $request->only(['search']),
         ]);
     }
 
