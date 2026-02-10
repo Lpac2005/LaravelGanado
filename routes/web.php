@@ -31,7 +31,14 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', [
+        'stats' => [
+            'bovinos' => \App\Models\Bovino::count(),
+            'pesajes' => \App\Models\Pesaje::count(),
+            'sanidad' => \App\Models\Sanidad::count(),
+            'eventos' => \App\Models\Evento::count(),
+        ]
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

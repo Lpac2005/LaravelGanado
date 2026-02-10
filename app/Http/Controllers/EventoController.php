@@ -11,7 +11,10 @@ class EventoController extends Controller
      */
     public function index()
     {
-        //
+        $eventos = \App\Models\Evento::with('bovino')->latest('fecha')->get();
+        return \Inertia\Inertia::render('Eventos/Index', [
+            'eventos' => $eventos
+        ]);
     }
 
     /**
@@ -19,7 +22,10 @@ class EventoController extends Controller
      */
     public function create()
     {
-        //
+        $bovinos = \App\Models\Bovino::select('id', 'arete', 'nombre')->get();
+        return \Inertia\Inertia::render('Eventos/Create', [
+            'bovinos' => $bovinos
+        ]);
     }
 
     /**
@@ -27,7 +33,16 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'bovino_id' => 'required|exists:bovinos,id',
+            'tipo' => 'required|string|max:255',
+            'fecha' => 'required|date',
+            'detalle' => 'nullable|string',
+        ]);
+
+        \App\Models\Evento::create($validated);
+
+        return redirect()->route('eventos.index');
     }
 
     /**
@@ -43,7 +58,13 @@ class EventoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $evento = \App\Models\Evento::findOrFail($id);
+        $bovinos = \App\Models\Bovino::select('id', 'arete', 'nombre')->get();
+
+        return \Inertia\Inertia::render('Eventos/Edit', [
+            'evento' => $evento,
+            'bovinos' => $bovinos
+        ]);
     }
 
     /**
@@ -51,7 +72,18 @@ class EventoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $evento = \App\Models\Evento::findOrFail($id);
+
+        $validated = $request->validate([
+            'bovino_id' => 'required|exists:bovinos,id',
+            'tipo' => 'required|string|max:255',
+            'fecha' => 'required|date',
+            'detalle' => 'nullable|string',
+        ]);
+
+        $evento->update($validated);
+
+        return redirect()->route('eventos.index');
     }
 
     /**
@@ -59,6 +91,9 @@ class EventoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $evento = \App\Models\Evento::findOrFail($id);
+        $evento->delete();
+
+        return redirect()->route('eventos.index');
     }
 }

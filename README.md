@@ -19,9 +19,20 @@ El sistema cuenta (o contará) con los siguientes módulos clave:
 1.  ✅ **Gestión de Bovinos**: Registro individual de animales (raza, edad, origen, etc.).
 2.  ✅ **Control de Pesajes**: Historial de peso para monitorear el desarrollo y ganancia diaria.
 3.  ✅ **Sanidad**: Registro de vacunas, tratamientos y controles veterinarios.
-4.  **Eventos**: Calendario de actividades, partos, destetes y recordatorios.
+4.  ✅ **Eventos**: Calendario de actividades, partos, destetes y recordatorios.
 
 ## 📅 Historial de Cambios
+
+### v0.5.0 - Mejoras de UX e Internacionalización
+- **Dashboard**: Panel con tarjetas de estadísticas en tiempo real y accesos directos.
+- **Perfil**: Traducción completa al español (Información, Contraseña, Eliminar Cuenta).
+- **Rutas**: Optimización de carga de datos para el dashboard.
+
+### v0.4.0 - Módulo de Eventos
+- Registro de sucesos: Partos, Celos, Servicios, etc.
+- Calendario cronológico (Listado).
+- Badges de colores para tipos de eventos.
+- Relación `Bovino -> Eventos`.
 
 ### v0.3.0 - Módulo de Sanidad
 - Creación de Modelo y Migración para `Sanidad`.
