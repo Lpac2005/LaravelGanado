@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Bovino extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'arete',
+        'nombre',
+        'fecha_nacimiento',
+        'raza',
+        'sexo',
+        'peso_nacimiento',
+    ];
 }
