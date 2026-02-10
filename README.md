@@ -16,10 +16,24 @@ Este proyecto está construido sobre un stack robusto y moderno para garantizar 
 
 El sistema cuenta (o contará) con los siguientes módulos clave:
 
-1.  **Gestión de Bovinos**: Registro individual de animales (raza, edad, origen, etc.).
-2.  **Control de Pesajes**: Historial de peso para monitorear el desarrollo y ganancia diaria.
+1.  ✅ **Gestión de Bovinos**: Registro individual de animales (raza, edad, origen, etc.).
+2.  ✅ **Control de Pesajes**: Historial de peso para monitorear el desarrollo y ganancia diaria.
 3.  **Sanidad**: Registro de vacunas, tratamientos y controles veterinarios.
 4.  **Eventos**: Calendario de actividades, partos, destetes y recordatorios.
+
+## 📅 Historial de Cambios
+
+### v0.2.0 - Módulo de Pesajes
+- Creación de Modelo y Migración para `Pesajes`.
+- Controlador con métodos CRUD.
+- Vistas Vue (Index, Create, Edit) con integración de Inertia.
+- Relación `Bovino -> Pesajes` implementada.
+- Navegación actualizada.
+
+### v0.1.0 - Módulo de Bovinos
+- Configuración inicial del proyecto (Laravel + Vue + Inertia).
+- CRUD completo para `Bovinos`.
+- Autenticación y configuración de base de datos.
 
 ## 🛠️ Instalación y Configuración Local
 

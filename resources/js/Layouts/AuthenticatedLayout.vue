@@ -35,6 +35,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('bovinos.index')" :active="route().current('bovinos.*')">
                                     Bovinos
                                 </NavLink>
+                                <NavLink :href="route('pesajes.index')" :active="route().current('pesajes.*')">
+                                    Pesajes
+                                </NavLink>
                             </div>
                         </div>
 
@@ -120,6 +123,9 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('bovinos.index')" :active="route().current('bovinos.*')">
                             Bovinos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('pesajes.index')" :active="route().current('pesajes.*')">
+                            Pesajes
                         </ResponsiveNavLink>
                     </div>
 
