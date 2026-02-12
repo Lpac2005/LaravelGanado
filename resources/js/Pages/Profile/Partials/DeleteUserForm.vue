@@ -39,15 +39,11 @@ const closeModal = () => {
 
 <template>
     <section class="space-y-6">
-        <header>
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Eliminar Cuenta</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400 italic">
+            Atención: La eliminación del folio de usuario es permanente.
+        </p>
 
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Una vez que se elimine tu cuenta, todos sus recursos y datos se eliminarán permanentemente. Antes de eliminar tu cuenta, descarga cualquier dato o información que desees conservar.
-            </p>
-        </header>
-
-        <DangerButton @click="confirmUserDeletion">Eliminar Cuenta</DangerButton>
+        <DangerButton @click="confirmUserDeletion">Proceder con la Baja</DangerButton>
 
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">

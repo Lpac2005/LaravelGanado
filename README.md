@@ -9,20 +9,32 @@ Este proyecto está construido sobre un stack robusto y moderno para garantizar 
 - **Backend**: [Laravel 10](https://laravel.com) (PHP 8.1+)
 - **Frontend**: [Vue.js 3](https://vuejs.org) (Composition API)
 - **Intermediario**: [Inertia.js](https://inertiajs.com) (Monolito Moderno)
-- **Estilos**: [Tailwind CSS 3](https://tailwindcss.com)
+- **Estilos**: [Tailwind CSS 3](https://tailwindcss.com) con Estética Industrial
 - **Base de Datos**: SQLite (Integrada)
+
+## 🎨 Estética "Dossier Industrial"
+
+El sistema utiliza una experiencia visual basada en carpetas de archivo y fichas técnicas:
+- **Fondo Blanco Puro**: Para máxima legibilidad.
+- **Estructura de Carpeta**: Los contenedores simulan carpetas con pestañas de colores.
+- **Diseño Rústico Profesional**: Bordes gruesos y tipografía clara.
 
 ## 📋 Módulos Principales
 
-El sistema cuenta con los siguientes módulos clave:
-
-1.  ✅ **Gestión de Bovinos**: Registro individual de animales (raza, edad, origen, etc.).
-2.  ✅ **Control de Pesajes**: Historial de peso para monitorear el desarrollo y ganancia diaria.
-3.  ✅ **Sanidad**: Registro de vacunas, tratamientos y controles veterinarios.
-4.  ✅ **Eventos**: Calendario de actividades, partos, destetes y recordatorios.
-5.  ✅ **Modo Oscuro**: Interfaz adaptable a temas claro/oscuro.
+El sistema cuenta con los módulos optimizados para el campo:
+1.  ✅ **Registro**: Gestión técnica de bovinos.
+2.  ✅ **Peso**: Control de desarrollo animal.
+3.  ✅ **Sanidad**: Historial médico y vacunación.
+4.  ✅ **Calendario**: Gestión de eventos y tareas.
+5.  ✅ **Usuario**: Perfil y control de seguridad.
 
 ## 📅 Historial de Cambios
+
+### v2.0.0 - Rediseño Industrial (Actual)
+- **Interfaz**: Implementación completa de la estética "Dossier Industrial".
+- **Branding**: Reemplazo del logo de Laravel por identidad ganadera propia.
+- **Nav**: Unificación de nombres de módulos (Registro, Peso, Sanidad, Calendario, Usuario).
+- **UI**: Fondos blanco puro para eliminar distracciones visuales.
 
 ### v1.0.0 - Versión Estable
 - **Base de Datos**: Migración completa a SQLite para simplificar instalación.

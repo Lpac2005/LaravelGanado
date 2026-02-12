@@ -28,73 +28,87 @@ const submit = () => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Editar Evento</h2>
+            <h2 class="font-black text-2xl text-gray-800 dark:text-white uppercase tracking-tighter italic">Editar Reporte de Evento</h2>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        <form @submit.prevent="submit" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+                <!-- Contenedor Estilo Reporte de Incidencia/Evento -->
+                <div class="bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 shadow-[6px_6px_0px_rgba(0,0,0,0.1)] relative mt-8">
+                    <div class="absolute -top-5 left-0 right-0 flex justify-center">
+                         <div class="bg-purple-700 dark:bg-purple-600 text-white font-bold uppercase text-sm tracking-widest py-1 px-8 rounded-full border-2 border-white dark:border-gray-800 shadow-md">
+                            Reporte de Suceso
+                        </div>
+                    </div>
+
+                    <div class="p-8 pt-10">
+                        <form @submit.prevent="submit" class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             
-                            <!-- Bovino (No editable para simplificar) -->
-                            <div class="md:col-span-2">
-                                <InputLabel for="bovino_id" value="Bovino" />
-                                <div class="mt-1 block w-full bg-gray-100 border border-gray-300 rounded-md py-2 px-3 text-gray-500">
-                                    {{ bovinos.find(b => b.id == form.bovino_id)?.arete || 'Bovino' }} 
-                                    {{ bovinos.find(b => b.id == form.bovino_id)?.nombre ? '- ' + bovinos.find(b => b.id == form.bovino_id).nombre : '' }}
+                            <!-- Sección Contexto -->
+                            <div class="md:col-span-2 border-b-2 border-dashed border-gray-200 dark:border-gray-700 pb-4 mb-2">
+                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">1. Contexto del Evento</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="md:col-span-2">
+                                        <InputLabel for="bovino_id" value="Bovino Involucrado (Lectura)" class="!text-xs !uppercase !tracking-wider !text-gray-500" />
+                                        <div class="mt-1 block w-full !rounded-none !border-2 !border-gray-200 bg-gray-50 py-3 px-4 font-black text-xl text-gray-600 italic">
+                                            {{ bovinos.find(b => b.id == form.bovino_id)?.arete }} 
+                                            {{ bovinos.find(b => b.id == form.bovino_id)?.nombre ? '- ' + bovinos.find(b => b.id == form.bovino_id).nombre : '' }}
+                                        </div>
+                                        <input type="hidden" v-model="form.bovino_id" />
+                                    </div>
+
+                                    <div>
+                                        <InputLabel for="tipo" value="Tipo de Evento" class="!text-xs !uppercase !tracking-wider !text-gray-500" />
+                                        <select
+                                            id="tipo"
+                                            v-model="form.tipo"
+                                            class="mt-1 block w-full !rounded-none !border-2 !border-gray-300 focus:!border-purple-500 !shadow-none bg-white font-bold"
+                                            required
+                                        >
+                                            <option value="" disabled>Seleccione...</option>
+                                            <option value="Parto">Parto</option>
+                                            <option value="Celo">Celo</option>
+                                            <option value="Servicio">Servicio (Monta/Inseminación)</option>
+                                            <option value="Destete">Destete</option>
+                                            <option value="Muerte">Muerte</option>
+                                            <option value="Venta">Venta</option>
+                                            <option value="Otro">Otro</option>
+                                        </select>
+                                        <InputError class="mt-2" :message="form.errors.tipo" />
+                                    </div>
+
+                                    <div>
+                                        <InputLabel for="fecha" value="Fecha Registrada" class="!text-xs !uppercase !tracking-wider !text-gray-500" />
+                                        <TextInput
+                                            id="fecha"
+                                            type="date"
+                                            class="mt-1 block w-full !rounded-none !border-2 !border-gray-300 focus:!border-purple-500 !shadow-none font-bold"
+                                            v-model="form.fecha"
+                                            required
+                                        />
+                                        <InputError class="mt-2" :message="form.errors.fecha" />
+                                    </div>
                                 </div>
-                                <input type="hidden" v-model="form.bovino_id" />
                             </div>
 
-                            <!-- Tipo de Evento -->
-                            <div>
-                                <InputLabel for="tipo" value="Tipo de Evento" />
-                                <select
-                                    id="tipo"
-                                    v-model="form.tipo"
-                                    class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                                    required
-                                >
-                                    <option value="" disabled>Seleccione...</option>
-                                    <option value="Parto">Parto</option>
-                                    <option value="Celo">Celo</option>
-                                    <option value="Servicio">Servicio (Monta/Inseminación)</option>
-                                    <option value="Destete">Destete</option>
-                                    <option value="Muerte">Muerte</option>
-                                    <option value="Venta">Venta</option>
-                                    <option value="Otro">Otro</option>
-                                </select>
-                                <InputError class="mt-2" :message="form.errors.tipo" />
-                            </div>
-
-                            <!-- Fecha -->
-                            <div>
-                                <InputLabel for="fecha" value="Fecha del Evento" />
-                                <TextInput
-                                    id="fecha"
-                                    type="date"
-                                    class="mt-1 block w-full"
-                                    v-model="form.fecha"
-                                    required
-                                />
-                                <InputError class="mt-2" :message="form.errors.fecha" />
-                            </div>
-
-                            <!-- Detalles -->
+                            <!-- Sección Descripción -->
                             <div class="md:col-span-2">
-                                <InputLabel for="detalle" value="Detalles / Observaciones" />
+                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">2. Descripción Detallada</h3>
                                 <textarea
                                     id="detalle"
                                     v-model="form.detalle"
-                                    class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                                    rows="3"
+                                    class="mt-1 block w-full !rounded-none !border-2 !border-gray-300 focus:!border-purple-500 !shadow-none bg-white font-medium italic text-gray-700"
+                                    rows="5"
+                                    placeholder="Describa el suceso con el mayor detalle posible para el historial del animal..."
                                 ></textarea>
                                 <InputError class="mt-2" :message="form.errors.detalle" />
                             </div>
 
-                            <div class="flex items-center justify-end mt-4 md:col-span-2">
-                                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            <div class="flex items-center justify-end mt-8 pt-6 border-t-2 border-gray-100 dark:border-gray-700 md:col-span-2">
+                                <Link :href="route('eventos.index')" class="text-gray-500 hover:text-gray-700 underline text-sm mr-4 uppercase tracking-wider font-bold">
+                                    Cancelar
+                                </Link>
+                                <PrimaryButton class="!rounded-none !bg-purple-600 hover:!bg-purple-800 !px-8 !py-3 !text-sm !tracking-widest border-2 border-purple-800 shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-y-0.5 active:shadow-none transition-all" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                                     Actualizar Evento
                                 </PrimaryButton>
                             </div>

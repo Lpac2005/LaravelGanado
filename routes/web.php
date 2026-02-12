@@ -20,6 +20,7 @@ use App\Http\Controllers\BovinoController;
 use App\Http\Controllers\PesajeController;
 use App\Http\Controllers\SanidadController;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -50,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('pesajes', PesajeController::class);
     Route::resource('sanidads', SanidadController::class);
     Route::resource('eventos', EventoController::class);
+    Route::resource('users', UserController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -35,15 +35,7 @@ const updatePassword = () => {
 
 <template>
     <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Actualizar Contraseña</h2>
-
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Asegúrate de que tu cuenta esté protegida con una contraseña larga y aleatoria.
-            </p>
-        </header>
-
-        <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
+        <form @submit.prevent="updatePassword" class="space-y-6">
             <div>
                 <InputLabel for="current_password" value="Contraseña Actual" />
 
